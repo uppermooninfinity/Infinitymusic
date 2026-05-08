@@ -9,25 +9,23 @@ from Oneforall import app
 
 def upload_file(file_path):
 
+    server = requests.get(
+        "https://api.gofile.io/servers"
+    ).json()["data"]["servers"][0]["name"]
+
     with open(file_path, "rb") as f:
 
         response = requests.post(
-            "https://catbox.moe/user/api.php",
-            data={
-                "reqtype": "fileupload"
-            },
-            files={
-                "fileToUpload": f
-            },
-            headers={
-                "User-Agent": "Mozilla/5.0"
-            }
+            f"https://{server}.gofile.io/uploadFile",
+            files={"file": f}
         )
 
-    if response.status_code == 200:
-        return True, response.text.strip()
+    data = response.json()
 
-    return False, response.text
+    if data["status"] == "ok":
+        return True, data["data"]["downloadPage"]
+
+    return False, "Upload failed"
 
 @app.on_message(
     filters.command(
