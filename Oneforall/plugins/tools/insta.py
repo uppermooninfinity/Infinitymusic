@@ -5,7 +5,7 @@ import yt_dlp
 from pyrogram.types import Message
 from Oneforall import app
 
-URL_PATTERN = r"(https?://[^\s]+)"
+URL_PATTERN = r"(https?://(www\.)?(youtube\.com|youtu\.be|instagram\.com)/[^\s]+)"
 
 def download_video(url: str):
     try:
