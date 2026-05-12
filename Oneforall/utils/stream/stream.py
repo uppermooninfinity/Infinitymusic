@@ -93,12 +93,18 @@ async def stream(
                 if not forceplay:
                     db[chat_id] = []
                 status = True if video else None
+                file_path = None
                 try:
                     file_path, direct = await YouTube.download(
                         vidid, mystic, video=status, videoid=True
                     )
-                except:
-                    await mystic.edit_text(_["play_3"])
+                    if not locals().get("file_path"):
+                        await mystic.edit_text("Download failed: no stream/file returned")
+                        return
+                except Exception as e:
+                    print(e)
+                    await mystic.edit_text(str(e))
+                    return
                 await Hotty.join_call(
                     chat_id,
                     original_chat_id,
@@ -160,6 +166,7 @@ async def stream(
         duration_min = result["duration_min"]
         thumbnail = result["thumb"]
         status = True if video else None
+        file_path = None
         try:
             file_path, direct = await YouTube.download(
                 vidid, mystic, videoid=True, video=status
