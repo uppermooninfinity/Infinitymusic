@@ -63,7 +63,7 @@ def help_pannel(_, START=None):
                 btn(
                     "ғᴜɴ ɢᴀᴍᴇs 🎮",
                     5224659060808250648,
-                    callback_data="help_callback hb21",
+                    callback_data="games_menu",
                     style=ButtonStyle.PRIMARY
                 ),
             ],
