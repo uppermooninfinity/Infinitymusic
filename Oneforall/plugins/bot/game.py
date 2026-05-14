@@ -1,4 +1,5 @@
 from pyrogram import filters
+from pyrogram.enums import ButtonStyle
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from Oneforall import app
 import re
@@ -49,11 +50,18 @@ async def games_menu(_, query):
     )
 
     await query.message.edit_text(
-        raw_text,
-        reply_markup=InlineKeyboardMarkup(
+    raw_text,
+    reply_markup=InlineKeyboardMarkup(
+        [
             [
-                [InlineKeyboardButton("🔙 Back", callback_data="mbot_cb")]
+                InlineKeyboardButton(
+                    "ʙᴀᴄᴋ",
+                    callback_data="mbot_cb",
+                    style=ButtonStyle.DANGER,
+                    icon_custom_emoji_id=5210952531676504517
+                )
             ]
-        ),
-        disable_web_page_preview=True
-    )
+        ]
+    ),
+    disable_web_page_preview=True
+)
