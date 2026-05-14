@@ -11,8 +11,32 @@ from pyrogram.types import (
 )
 
 from telegraph import upload_file
-
 from Oneforall import app
+
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+# PATH FIX (NO MORE ERRORS)
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━#
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+ROOT_DIR = os.path.abspath(
+    os.path.join(BASE_DIR, "../../")
+)
+
+ASSETS_DIR = os.path.join(ROOT_DIR, "assets")
+
+DOWNLOADS_DIR = os.path.abspath(
+    os.path.join(ROOT_DIR, "../downloads")
+)
+
+os.makedirs(DOWNLOADS_DIR, exist_ok=True)
+
+UPIC = os.path.join(ASSETS_DIR, "upic.png")
+
+BG_IMAGES = [
+    os.path.join(ASSETS_DIR, "cppicbranded.jpg"),
+    os.path.join(ASSETS_DIR, "goku.jpg"),
+]
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # PREMIUM BUTTON FUNCTION
@@ -27,14 +51,13 @@ def btn(text, emoji_id, style=ButtonStyle.DEFAULT, **kwargs):
             **kwargs
         )
     except TypeError:
-        # Fallback
         return InlineKeyboardButton(
             text=text,
             **kwargs
         )
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━#
-# RANDOM PREMIUM COUPLE COLORS
+# RANDOM COLORS
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 
 COUPLE_COLORS = [
@@ -118,6 +141,7 @@ async def send_couple(message):
         )
 
     # RANDOM USERS
+
     c1_id = random.choice(users)
     c2_id = random.choice(users)
 
@@ -125,50 +149,73 @@ async def send_couple(message):
         c2_id = random.choice(users)
 
     # USER DATA
+
     user1 = await app.get_users(c1_id)
     user2 = await app.get_users(c2_id)
 
     N1 = user1.mention
     N2 = user2.mention
 
-    # PROFILE PHOTOS
+    # PHOTOS
+
     photo1 = user1.photo
     photo2 = user2.photo
 
-    try:
-        p1 = await app.download_media(
-            photo1.big_file_id,
-            file_name="downloads/pfp1.png",
-        )
-    except Exception:
-        p1 = "Oneforall/assets/upic.png"
+    # SAFE DOWNLOAD
 
     try:
-        p2 = await app.download_media(
-            photo2.big_file_id,
-            file_name="downloads/pfp2.png",
-        )
+        if photo1:
+            p1 = await app.download_media(
+                photo1.big_file_id,
+                file_name=f"{DOWNLOADS_DIR}/pfp1.png",
+            )
+        else:
+            p1 = UPIC
+
     except Exception:
-        p2 = "Oneforall/assets/upic.png"
+        p1 = UPIC
 
-    # OPEN IMAGES
-    img1 = Image.open(p1).convert("RGBA")
-    img2 = Image.open(p2).convert("RGBA")
+    try:
+        if photo2:
+            p2 = await app.download_media(
+                photo2.big_file_id,
+                file_name=f"{DOWNLOADS_DIR}/pfp2.png",
+            )
+        else:
+            p2 = UPIC
 
-    # BACKGROUND IMAGE
-    img = Image.open(
-        "Oneforall/assets/cppicbranded.jpg"
-    ).convert("RGBA")
+    except Exception:
+        p2 = UPIC
+
+    # SAFE IMAGE OPEN
+
+    try:
+        img1 = Image.open(p1).convert("RGBA")
+    except Exception:
+        img1 = Image.open(UPIC).convert("RGBA")
+
+    try:
+        img2 = Image.open(p2).convert("RGBA")
+    except Exception:
+        img2 = Image.open(UPIC).convert("RGBA")
+
+    # RANDOM BACKGROUND
+
+    bg = random.choice(BG_IMAGES)
+
+    img = Image.open(bg).convert("RGBA")
 
     img1 = img1.resize((437, 437))
     img2 = img2.resize((437, 437))
 
     # ROUND IMAGE 1
+
     mask1 = Image.new("L", img1.size, 0)
     draw1 = ImageDraw.Draw(mask1)
     draw1.ellipse((0, 0) + img1.size, fill=255)
 
     # ROUND IMAGE 2
+
     mask2 = Image.new("L", img2.size, 0)
     draw2 = ImageDraw.Draw(mask2)
     draw2.ellipse((0, 0) + img2.size, fill=255)
@@ -177,14 +224,18 @@ async def send_couple(message):
     img2.putalpha(mask2)
 
     # PASTE
+
     img.paste(img1, (116, 160), img1)
     img.paste(img2, (789, 160), img2)
 
     # SAVE
+
     output = f"test_{cid}.png"
+
     img.save(output)
 
-    # RANDOM LOLLIPOP PREMIUM TEXT
+    # RANDOM PREMIUM TEXT
+
     lolipop = random.choice([
         "🍭 ʟᴏʟʟɪᴘᴏᴘ ᴘʀᴇᴍɪᴜᴍ ᴄᴏᴜᴘʟᴇ 🍭",
         "💞 ᴄᴜᴛᴇ ᴄᴏᴜᴘʟᴇ ᴏꜰ ᴛʜᴇ ᴅᴀʏ 💞",
@@ -198,7 +249,7 @@ async def send_couple(message):
       {N1}  ♡  {N2}
            💚✨
 
-> ꜱᴏᴍᴇ ᴄᴏɴɴᴇᴄᴛɪᴏɴꜱ ᴀʀᴇ  
+> ꜱᴏᴍᴇ ᴄᴏɴɴᴇᴄᴛɪᴏɴꜱ ᴀʀᴇ
 > ᴡʀɪᴛᴛᴇɴ ɪɴ ꜱᴛᴀʀꜱ ✨💫
 
 🎀 ɴᴇxᴛ ᴄᴏᴜᴘʟᴇ :
@@ -216,21 +267,23 @@ async def send_couple(message):
     )
 
     # TELEGRAPH
+
     try:
         upload_file(output)
     except Exception:
         pass
 
     # CLEANUP
+
     files = [
-        "downloads/pfp1.png",
-        "downloads/pfp2.png",
+        f"{DOWNLOADS_DIR}/pfp1.png",
+        f"{DOWNLOADS_DIR}/pfp2.png",
         output,
     ]
 
     for file in files:
         try:
-            if os.path.exists(file):
+            if file and os.path.exists(file):
                 os.remove(file)
         except Exception:
             pass
@@ -268,13 +321,18 @@ async def new_couple(_, query):
     try:
         await query.answer(
             "💞 ɢᴇɴᴇʀᴀᴛɪɴɢ ɴᴇᴡ ᴄᴏᴜᴘʟᴇ...",
-            show_alert=False
+            cache_time=1
         )
+
+        try:
+            await query.message.delete()
+        except Exception:
+            pass
 
         await send_couple(query.message)
 
     except Exception as e:
-        print(e)
+        print(f"NEW COUPLE ERROR: {e}")
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 # COLOR BUTTON
