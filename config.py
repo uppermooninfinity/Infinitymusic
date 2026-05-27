@@ -109,10 +109,11 @@ TELEGRAM_AUDIO_URL = "https://graph.org/file/d22cec7c75e26f36edff7-0ce8cae0037d4
 TELEGRAM_VIDEO_URL = "https://graph.org/file/d22cec7c75e26f36edff7-0ce8cae0037d4aa0aa.jpg"
 STREAM_IMG_URL = "https://graph.org/file/d22cec7c75e26f36edff7-0ce8cae0037d4aa0aa.jpg"
 SOUNCLOUD_IMG_URL = "https://graph.org/file/d22cec7c75e26f36edff7-0ce8cae0037d4aa0aa.jpg"
-YOUTUBE_IMG_URL = "https://graph.org/file/d22cec7c75e26f36edff7-0ce8cae0037d4aa0aa.jpg"
+YOUTUBE_IMG_URL = "https://graph.org/file/549cdaa7f5fc1d49159ba-8b5c466a5f0a504310.jpg"
 SPOTIFY_ARTIST_IMG_URL = "https://graph.org/file/d22cec7c75e26f36edff7-0ce8cae0037d4aa0aa.jpg"
 SPOTIFY_ALBUM_IMG_URL = "https://graph.org/file/d22cec7c75e26f36edff7-0ce8cae0037d4aa0aa.jpg"
 SPOTIFY_PLAYLIST_IMG_URL = "https://graph.org/file/d22cec7c75e26f36edff7-0ce8cae0037d4aa0aa.jpg"
+REPO_VID_URL = "https://graph.org/file/99d5b0c5b09482c09fcca-7e968971f58ab0e031.mp4" 
 
 START_IMG_URL = os.getenv("START_IMG_URL")
 
