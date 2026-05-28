@@ -1,0 +1,2 @@
+#applies filters ex : bass boost , echo , sarround , slow , fast,  normal and disable filter no telegram rate limits on eeit message keep the telegram rate limits in mind and execute file add filter button in Oneforall/utils/inline/play.py
+#also when user selectd. a filter filter should be applied to playing on song as soon as user clikcs it and make changes needed in call.oy for applying filter where stream is built 
