@@ -75,19 +75,27 @@ async def show_filters(client, CallbackQuery, _):
         
         if callback_request:
             try:
-                videoid, user_id, cplay, fplay = callback_request.split("|")
+                # Format: videoid|chat_id (simplified for stream_markup_timer)
+                parts = callback_request.split("|")
+                if len(parts) == 2:
+                    videoid, chat_id = parts
+                elif len(parts) == 4:
+                    # Legacy format: videoid|user_id|cplay|fplay
+                    videoid, user_id, cplay, fplay = parts
+                    if int(user_id) != 0 and CallbackQuery.from_user.id != int(user_id):
+                        try:
+                            return await CallbackQuery.answer(_["playcb_1"], show_alert=True)
+                        except:
+                            return
+                else:
+                    await CallbackQuery.answer("❌ Invalid callback data!", show_alert=True)
+                    return
             except:
                 await CallbackQuery.answer("❌ Invalid callback data!", show_alert=True)
                 return
         else:
             await CallbackQuery.answer("❌ No data provided!", show_alert=True)
             return
-        
-        if CallbackQuery.from_user.id != int(user_id):
-            try:
-                return await CallbackQuery.answer(_["playcb_1"], show_alert=True)
-            except:
-                return
         
         try:
             await CallbackQuery.answer()
