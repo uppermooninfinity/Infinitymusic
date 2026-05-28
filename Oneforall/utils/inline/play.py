@@ -100,6 +100,12 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
         ],
         [
             InlineKeyboardButton(
+                text="🎚️ ꜰɪʟᴛᴇʀs",
+                callback_data=f"ShowFilters None|{chat_id}",
+            ),
+        ],
+        [
+            InlineKeyboardButton(
                 text=_["CLOSE_BUTTON"],
                 callback_data="close",
                 style=ButtonStyle.SUCCESS
@@ -150,11 +156,6 @@ def autoplay_mood_markup():
                 text=moods[i][0],
                 callback_data=f"songconfig_mood:{moods[i][1]}"
             )
-
-
-
-
-
 
 
 
@@ -350,10 +351,6 @@ def filters_markup_page_3():
 
 
 
-
-
-
-
 def filters_markup_page_4():
     """Display fourth page of filters"""
     filters = [
@@ -423,8 +420,6 @@ def playlist_markup(_, videoid, user_id, ptype, channel, fplay):
 
 
 
-
-
 def livestream_markup(_, videoid, user_id, mode, channel, fplay):
     buttons = [
         [
@@ -476,10 +471,7 @@ def slider_markup(_, videoid, user_id, query, query_type, channel, fplay):
 
 
 
-
 ## Telegram Markup
-
-
 
 
 
@@ -499,7 +491,6 @@ def telegram_markup(_, chat_id):
 
 
 ## Queue Markup
-
 
 
 
@@ -547,8 +538,6 @@ def queue_markup(_, videoid, chat_id):
     ]
 
     return buttons
-
-
 
 
 
@@ -628,8 +617,6 @@ def stream_markup_timer2(_, chat_id, played, dur):
         ],
     ]
     return buttons
-
-
 
 
 
